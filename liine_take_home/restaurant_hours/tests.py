@@ -7,6 +7,7 @@ import restaurant_hours.util as u
 
 
 class DataCleaningTests(TestCase):
+
     def check_split_opening_days_and_hours(
         self, days_and_hours_mention, days_gt, hours_gt
     ):
@@ -34,3 +35,16 @@ class DataCleaningTests(TestCase):
             "Mon-Thu, Sun",
             "11:30 am - 10 pm",
         )
+
+    def test_helper_functions(self):
+        days_and_hours_fields = u.get_all_days_and_hours_fields()
+        self.assertIsInstance(days_and_hours_fields, list)
+
+        days_and_hours_mentions = u.get_all_days_and_hours_mentions()
+        self.assertIsInstance(days_and_hours_mentions, list)
+
+        days_mentions = u.get_all_days_mentions()
+        self.assertIsInstance(days_mentions, list)
+
+        hours_mentions = u.get_all_hours_mentions()
+        self.assertIsInstance(hours_mentions, list)
