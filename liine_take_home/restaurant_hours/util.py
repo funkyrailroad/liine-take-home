@@ -87,16 +87,25 @@ def get_opening_days_from_days_mention(days_mention):
     return ["Sat"]
 
 
+days_of_the_week = [
+    "Mon",
+    "Tues",
+    "Wed",
+    "Thur",
+    "Fri",
+    "Sat",
+    "Sun",
+]
+
+
 def is_single_day(day_mention):
-    days_of_the_week = [
-        "Mon",
-        "Tues",
-        "Wed",
-        "Thurs",
-        "Fri",
-        "Sat",
-        "Sun",
-    ]
     if day_mention in days_of_the_week:
         return True
     return False
+
+
+def get_opening_days_from_day_range(day_range):
+    day1, day2 = day_range.split("-")
+    ind1 = days_of_the_week.index(day1)
+    ind2 = days_of_the_week.index(day2)
+    return days_of_the_week[ind1 : ind2 + 1]
