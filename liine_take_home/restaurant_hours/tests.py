@@ -48,6 +48,19 @@ class DataCleaningTests(TestCase):
         hours_mentions = u.get_all_hours_mentions()
         self.assertIsInstance(hours_mentions, list)
 
+    def check_split_days_mention(self, days_mention, split_days_mention_gt):
+        split_days_mention = u.split_days_mention(days_mention)
+        self.assertEqual(set(split_days_mention), set(split_days_mention_gt))
+
+    def test_split_days_mention(self):
+        self.check_split_days_mention("Sat", ["Sat"])
+
+        self.check_split_days_mention("Mon-Thu, Sun", ["Mon-Thu", "Sun"])
+
+        self.check_split_days_mention("Fri-Sat", ["Fri-Sat"])
+
+        self.check_split_days_mention("Mon-Fri, Sat", ["Mon-Fri", "Sat"])
+
     def check_get_opening_days_from_days_mention(self, days_mention, opening_days_gt):
         opening_days = u.get_opening_days_from_days_mention(days_mention)
         self.assertEqual(set(opening_days), set(opening_days_gt))

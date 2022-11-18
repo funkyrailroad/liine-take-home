@@ -79,5 +79,9 @@ def get_all_days_and_hours_fields():
     return days_and_hours_fields
 
 
+def split_days_mention(days_mention):
+    return [day_mention.strip() for day_mention in days_mention.split(",")]
+
+
 def get_opening_days_from_days_mention(days_mention):
     return ["Sat"]
