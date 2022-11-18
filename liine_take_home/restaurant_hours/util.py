@@ -85,3 +85,18 @@ def split_days_mention(days_mention):
 
 def get_opening_days_from_days_mention(days_mention):
     return ["Sat"]
+
+
+def is_single_day(day_mention):
+    days_of_the_week = [
+        "Mon",
+        "Tues",
+        "Wed",
+        "Thurs",
+        "Fri",
+        "Sat",
+        "Sun",
+    ]
+    if day_mention in days_of_the_week:
+        return True
+    return False

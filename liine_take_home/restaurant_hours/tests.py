@@ -81,3 +81,9 @@ class DataCleaningTests(TestCase):
         self.check_get_opening_days_from_days_mention(
             "Mon-Fri, Sat", ["Mon", "Tues", "Wed", "Thur", "Fri", "Sat"]
         )
+
+    def test_is_single_day(self):
+        self.assertTrue(u.is_single_day("Sat"))
+        self.assertTrue(u.is_single_day("Mon"))
+        self.assertFalse(u.is_single_day("Mon-Tues"))
+        self.assertFalse(u.is_single_day("Mon-Fri"))
