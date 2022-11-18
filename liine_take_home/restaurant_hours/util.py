@@ -77,3 +77,7 @@ def get_all_days_and_hours_fields():
             days_and_hours_field = row[1]
             days_and_hours_fields.append(days_and_hours_field)
     return days_and_hours_fields
+
+
+def get_opening_days_from_days_mention(days_mention):
+    return ["Sat"]
