@@ -1,4 +1,5 @@
 # Create your tests here.
+from datetime import time
 from pprint import pprint
 
 from django.test import TestCase
@@ -106,4 +107,8 @@ class DataCleaningTests(TestCase):
             set(["Tues", "Wed", "Thu", "Fri", "Sat", "Sun"]),
         )
 
-    # def get_opening_days_from_day_range(self):
+    def test_convert_time_string_to_time_obj(self):
+        self.assertEqual(u.convert_time_string_to_time_obj("5 pm"), time(17))
+        self.assertEqual(u.convert_time_string_to_time_obj("1 am"), time(1))
+        self.assertEqual(u.convert_time_string_to_time_obj("12 am"), time(0))
+        self.assertEqual(u.convert_time_string_to_time_obj("12 pm"), time(12))

@@ -1,5 +1,6 @@
 import csv
 import re
+from datetime import time
 
 from django.conf import settings
 
@@ -121,3 +122,18 @@ days_of_the_week = [
     "Sat",
     "Sun",
 ]
+
+
+def convert_time_string_to_time_obj(time_string):
+    """Time string is something like "11 am" or 10:30 pm"."""
+    if time_string == "12 am":
+        return time(0)
+
+    if time_string == "12 pm":
+        return time(12)
+
+    hour, suffix = time_string.split(" ")
+    hour = int(hour)
+    if suffix == "pm":
+        hour += 12
+    return time(hour)
