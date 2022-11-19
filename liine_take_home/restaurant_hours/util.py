@@ -83,16 +83,18 @@ def split_days_mention(days_mention):
     return [day_mention.strip() for day_mention in days_mention.split(",")]
 
 
+def get_opening_days_from_day_or_range(day_or_range):
+    if is_single_day(day_or_range):
+        return [day_or_range]
+    return get_opening_days_from_day_range(day_or_range)
+
+
 def get_opening_days_from_days_mention(days_mention):
     """day_mention is a split days_mention"""
     opening_days = []
     day_or_ranges = split_days_mention(days_mention)
-
     for day_or_range in day_or_ranges:
-        if is_single_day(day_or_range):
-            opening_days.append(day_or_range)
-            continue
-        days = get_opening_days_from_day_range(day_or_range)
+        days = get_opening_days_from_day_or_range(day_or_range)
         opening_days.extend(days)
     return opening_days
 
