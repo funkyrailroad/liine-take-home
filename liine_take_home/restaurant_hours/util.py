@@ -91,7 +91,7 @@ days_of_the_week = [
     "Mon",
     "Tues",
     "Wed",
-    "Thur",
+    "Thu",
     "Fri",
     "Sat",
     "Sun",

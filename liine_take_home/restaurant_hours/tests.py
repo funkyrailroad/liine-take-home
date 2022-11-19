@@ -69,13 +69,13 @@ class DataCleaningTests(TestCase):
         self.check_get_opening_days_from_days_mention("Sat", ["Sat"])
 
         self.check_get_opening_days_from_days_mention(
-            "Mon-Thu, Sun", ["Mon", "Tues", "Wed", "Thur", "Sun"]
+            "Mon-Thu, Sun", ["Mon", "Tues", "Wed", "Thu", "Sun"]
         )
 
         self.check_get_opening_days_from_days_mention("Fri-Sat", ["Fri", "Sat"])
 
         self.check_get_opening_days_from_days_mention(
-            "Mon-Fri, Sat", ["Mon", "Tues", "Wed", "Thur", "Fri", "Sat"]
+            "Mon-Fri, Sat", ["Mon", "Tues", "Wed", "Thu", "Fri", "Sat"]
         )
 
     def test_is_single_day(self):
@@ -87,15 +87,15 @@ class DataCleaningTests(TestCase):
     def test_get_opening_days_from_day_range(self):
         self.assertEqual(
             set(u.get_opening_days_from_day_range("Mon-Fri")),
-            set(["Mon", "Tues", "Wed", "Thur", "Fri"]),
+            set(["Mon", "Tues", "Wed", "Thu", "Fri"]),
         )
         self.assertEqual(
-            set(u.get_opening_days_from_day_range("Mon-Thur")),
-            set(["Mon", "Tues", "Wed", "Thur"]),
+            set(u.get_opening_days_from_day_range("Mon-Thu")),
+            set(["Mon", "Tues", "Wed", "Thu"]),
         )
         self.assertEqual(
             set(u.get_opening_days_from_day_range("Mon-Sun")),
-            set(["Mon", "Tues", "Wed", "Thur", "Fri", "Sat", "Sun"]),
+            set(["Mon", "Tues", "Wed", "Thu", "Fri", "Sat", "Sun"]),
         )
         self.assertEqual(
             set(u.get_opening_days_from_day_range("Mon-Tues")),
@@ -103,5 +103,7 @@ class DataCleaningTests(TestCase):
         )
         self.assertEqual(
             set(u.get_opening_days_from_day_range("Tues-Sun")),
-            set(["Tues", "Wed", "Thur", "Fri", "Sat", "Sun"]),
+            set(["Tues", "Wed", "Thu", "Fri", "Sat", "Sun"]),
         )
+
+    # def get_opening_days_from_day_range(self):
