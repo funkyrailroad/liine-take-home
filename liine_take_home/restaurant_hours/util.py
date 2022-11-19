@@ -124,16 +124,32 @@ days_of_the_week = [
 ]
 
 
+def get_opening_hours_from_hours_mention(hours_mention):
+    start, end = split_hours_mention(hours_mention)
+    start_t = convert_time_string_to_time_obj(start)
+    end_t = convert_time_string_to_time_obj(end)
+    return [start_t, end_t]
+
+
+def split_hours_mention(hours_mention):
+    start, end = [time.strip() for time in hours_mention.split("-")]
+    return (start, end)
+
+
 def convert_time_string_to_time_obj(time_string):
     """Time string is something like "11 am" or 10:30 pm"."""
-    if time_string == "12 am":
-        return time(0)
 
-    if time_string == "12 pm":
-        return time(12)
+    hour_min, suffix = time_string.split(" ")
 
-    hour, suffix = time_string.split(" ")
-    hour = int(hour)
-    if suffix == "pm":
+    if ":" in hour_min:
+        hour, min = [int(part) for part in hour_min.split(":")]
+    else:
+        hour, min = int(hour_min), 0
+
+    if (hour == 12) and (suffix == "pm"):
+        hour = 12
+    elif (hour == 12) and (suffix == "am"):
+        hour = 0
+    elif suffix == "pm":
         hour += 12
-    return time(hour)
+    return time(hour=hour, minute=min)

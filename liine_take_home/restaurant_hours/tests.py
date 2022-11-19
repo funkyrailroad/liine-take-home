@@ -107,8 +107,56 @@ class DataCleaningTests(TestCase):
             set(["Tues", "Wed", "Thu", "Fri", "Sat", "Sun"]),
         )
 
+    def test_get_opening_hours_from_hours_mention(self):
+
+        [
+            "11 am - 10 pm",
+            "11 am - 10:30 pm",
+            "10 am - 9:30 pm",
+            "9:30 am - 9:30 pm",
+            "11 am - 12 am",
+            "12 pm - 2 am",
+            "11 am - 9 pm",
+            "5 pm - 9 pm",
+            "11:30 am - 10 pm",
+            "5:30 pm - 10 pm",
+            "11 am - 10 pm",
+            "11 am - 11 pm",
+            "11 am - 10 pm",
+            "5 pm - 10 pm",
+        ]
+
+        self.assertEqual(
+            u.get_opening_hours_from_hours_mention("11 am - 10 pm"),
+            [time(11), time(22)],
+        )
+
+        self.assertEqual(
+            u.get_opening_hours_from_hours_mention("10 am - 10 pm"),
+            [time(10), time(22)],
+        )
+
+        self.assertEqual(
+            u.get_opening_hours_from_hours_mention("12 am - 12 pm"),
+            [time(0), time(12)],
+        )
+
+        self.assertEqual(
+            u.get_opening_hours_from_hours_mention("12:30 am - 12:30 pm"),
+            [time(0, 30), time(12, 30)],
+        )
+
+        self.assertEqual(
+            u.get_opening_hours_from_hours_mention("12:30 pm - 12:30 am"),
+            [time(12, 30), time(0, 30)],
+        )
+
     def test_convert_time_string_to_time_obj(self):
         self.assertEqual(u.convert_time_string_to_time_obj("5 pm"), time(17))
+        self.assertEqual(u.convert_time_string_to_time_obj("5:30 pm"), time(17, 30))
         self.assertEqual(u.convert_time_string_to_time_obj("1 am"), time(1))
+        self.assertEqual(u.convert_time_string_to_time_obj("1:30 am"), time(1, 30))
         self.assertEqual(u.convert_time_string_to_time_obj("12 am"), time(0))
         self.assertEqual(u.convert_time_string_to_time_obj("12 pm"), time(12))
+        self.assertEqual(u.convert_time_string_to_time_obj("12:30 pm"), time(12, 30))
+        self.assertEqual(u.convert_time_string_to_time_obj("12:30 am"), time(0, 30))
