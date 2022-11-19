@@ -18,28 +18,8 @@ def clean_hours_field():
     pass
 
 
-def split_hours_field(hours_field):
-    """Split and remove whitespace in hours field"""
-    return [mention.strip() for mention in hours_field.split("/")]
-
-
 def normalize_hours_mention():
     pass
-
-
-def split_days_and_hours_mention(mention):
-    """Opening days are the first part of the string and can potentially be:
-
-    - a single day
-    - multiple consecutive days
-    - multiple non-consecutive days
-    - or any combination thereof
-
-    A reliable split seems to be the first number in the string
-    """
-    split_index = re.search(r"\d", mention).start()
-    days, hours = mention[:split_index], mention[split_index:]
-    return days.strip(), hours.strip()
 
 
 def get_all_days_mentions():
@@ -68,6 +48,26 @@ def get_all_days_and_hours_mentions():
     return days_and_hours_mentions
 
 
+def split_days_and_hours_mention(mention):
+    """Opening days are the first part of the string and can potentially be:
+
+    - a single day
+    - multiple consecutive days
+    - multiple non-consecutive days
+    - or any combination thereof
+
+    A reliable split seems to be the first number in the string
+    """
+    split_index = re.search(r"\d", mention).start()
+    days, hours = mention[:split_index], mention[split_index:]
+    return days.strip(), hours.strip()
+
+
+def split_hours_field(hours_field):
+    """Split and remove whitespace in hours field"""
+    return [mention.strip() for mention in hours_field.split("/")]
+
+
 def get_all_days_and_hours_fields():
     days_and_hours_fields = []
     with open(f"{BASE_DIR}/restaurant_hours/restaurants.csv") as file:
@@ -77,16 +77,6 @@ def get_all_days_and_hours_fields():
             days_and_hours_field = row[1]
             days_and_hours_fields.append(days_and_hours_field)
     return days_and_hours_fields
-
-
-def split_days_mention(days_mention):
-    return [day_mention.strip() for day_mention in days_mention.split(",")]
-
-
-def get_opening_days_from_day_or_range(day_or_range):
-    if is_single_day(day_or_range):
-        return [day_or_range]
-    return get_opening_days_from_day_range(day_or_range)
 
 
 def get_opening_days_from_days_mention(days_mention):
@@ -99,15 +89,10 @@ def get_opening_days_from_days_mention(days_mention):
     return opening_days
 
 
-days_of_the_week = [
-    "Mon",
-    "Tues",
-    "Wed",
-    "Thu",
-    "Fri",
-    "Sat",
-    "Sun",
-]
+def get_opening_days_from_day_or_range(day_or_range):
+    if is_single_day(day_or_range):
+        return [day_or_range]
+    return get_opening_days_from_day_range(day_or_range)
 
 
 def is_single_day(day_mention):
@@ -121,3 +106,18 @@ def get_opening_days_from_day_range(day_range):
     ind1 = days_of_the_week.index(day1)
     ind2 = days_of_the_week.index(day2)
     return days_of_the_week[ind1 : ind2 + 1]
+
+
+def split_days_mention(days_mention):
+    return [day_mention.strip() for day_mention in days_mention.split(",")]
+
+
+days_of_the_week = [
+    "Mon",
+    "Tues",
+    "Wed",
+    "Thu",
+    "Fri",
+    "Sat",
+    "Sun",
+]
