@@ -66,17 +66,13 @@ class DataCleaningTests(TestCase):
         self.assertEqual(set(opening_days), set(opening_days_gt))
 
     def test_get_opening_days_from_days_mention(self):
-        self.check_get_opening_days_from_days_mention(
-            "Sat", ["Sat"]
-        )
+        self.check_get_opening_days_from_days_mention("Sat", ["Sat"])
 
         self.check_get_opening_days_from_days_mention(
             "Mon-Thu, Sun", ["Mon", "Tues", "Wed", "Thur", "Sun"]
         )
 
-        self.check_get_opening_days_from_days_mention(
-            "Fri-Sat", ["Fri", "Sat"]
-        )
+        self.check_get_opening_days_from_days_mention("Fri-Sat", ["Fri", "Sat"])
 
         self.check_get_opening_days_from_days_mention(
             "Mon-Fri, Sat", ["Mon", "Tues", "Wed", "Thur", "Fri", "Sat"]
