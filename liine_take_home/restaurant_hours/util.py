@@ -49,6 +49,13 @@ def get_all_days_and_hours_mentions():
     return days_and_hours_mentions
 
 
+def get_opening_hours_from_days_and_hours_mention(days_and_hours_mention):
+    days_mention, hours_mention = split_days_and_hours_mention(days_and_hours_mention)
+    days = get_opening_days_from_day_or_range(days_mention)
+    start, end = get_opening_hours_from_hours_mention(hours_mention)
+    return [(day, start, end) for day in days]
+
+
 def split_days_and_hours_mention(mention):
     """Opening days are the first part of the string and can potentially be:
 
