@@ -161,6 +161,31 @@ class DataCleaningTests(TestCase):
         self.assertEqual(u.convert_time_string_to_time_obj("12:30 pm"), time(12, 30))
         self.assertEqual(u.convert_time_string_to_time_obj("12:30 am"), time(0, 30))
 
+    def test_get_opening_hours_from_days_and_hours_field(self):
+        "Sun 3 pm - 11:30 pm"
+        "Mon-Fri 11 am - 10 pm  / Sat-Sun 5 pm - 10 pm"
+        "Mon-Sat 11 am - 10 pm  / Sun 12 pm - 10 pm"
+
+        self.assertEqual(
+            u.get_opening_hours_from_days_and_hours_field("Sun 3 pm - 11:30 pm"),
+            [("Sun", time(15), time(23, 30))],
+        )
+
+        self.assertEqual(
+            u.get_opening_hours_from_days_and_hours_field(
+                "Mon-Fri 11 am - 10 pm  / Sat-Sun 5 pm - 10 pm"
+            ),
+            [
+                ("Mon", time(11), time(22)),
+                ("Tues", time(11), time(22)),
+                ("Wed", time(11), time(22)),
+                ("Thu", time(11), time(22)),
+                ("Fri", time(11), time(22)),
+                ("Sat", time(17), time(22)),
+                ("Sun", time(17), time(22)),
+            ],
+        )
+
     def test_get_opening_hours_from_days_and_hours_mention(self):
         "Sun 3 pm - 11:30 pm"
         "Mon-Fri 11 am - 10 pm  / Sat-Sun 5 pm - 10 pm"
