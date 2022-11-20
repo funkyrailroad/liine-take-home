@@ -45,7 +45,7 @@ def get_all_days_and_hours_mentions():
     days_and_hours_mentions = []
     days_and_hours_fields = get_all_days_and_hours_fields()
     for days_and_hours_field in days_and_hours_fields:
-        days_and_hours_mentions.extend(split_hours_field(days_and_hours_field))
+        days_and_hours_mentions.extend(split_days_and_hours_field(days_and_hours_field))
     return days_and_hours_mentions
 
 
@@ -64,9 +64,9 @@ def split_days_and_hours_mention(mention):
     return days.strip(), hours.strip()
 
 
-def split_hours_field(hours_field):
+def split_days_and_hours_field(days_and_hours_field):
     """Split and remove whitespace in hours field"""
-    return [mention.strip() for mention in hours_field.split("/")]
+    return [mention.strip() for mention in days_and_hours_field.split("/")]
 
 
 def get_all_days_and_hours_fields():
