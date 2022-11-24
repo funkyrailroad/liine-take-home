@@ -17,3 +17,8 @@ class WeeklyOpeningHours(models.Model):
     day = models.CharField(max_length=4, choices=days_of_the_week, blank=False)
     open_time = models.TimeField()
     close_time = models.TimeField()
+
+class DailyOpeningHours(models.Model):
+    name = models.CharField(max_length=100, blank=False)
+    open_datetime = models.DateTimeField()
+    close_datetime = models.DateTimeField()
