@@ -178,12 +178,37 @@ def days_and_hours_mention_to_weekly_table_format(days_and_hours_mention):
     )
 
     weekly_table_format_dicts = []
-    for opening_hour in opening_hours:
-        weekly_table_format_dicts.append(
-            dict(
-                day=opening_hour[0],
-                open_time=opening_hour[1],
-                close_time=opening_hour[2],
+    for day, open_time, close_time in opening_hours:
+        if open_time <= close_time:
+            weekly_table_format_dicts.append(
+                dict(
+                    day=day,
+                    open_time=open_time,
+                    close_time=close_time,
+                )
             )
-        )
+
+        # this is to catch the case when the close time goes past midnight
+        else:
+            weekly_table_format_dicts.extend(
+                [
+                    dict(
+                        day=day,
+                        open_time=open_time,
+                        close_time=time.max,
+                    ),
+                    dict(
+                        day=get_next_day(day),
+                        open_time=time.min,
+                        close_time=close_time,
+                    ),
+                ]
+            )
+
     return weekly_table_format_dicts
+
+
+def get_next_day(day):
+    day_ind = days_of_the_week.index(day)
+    next_day_ind = (day_ind + 1) % len(days_of_the_week)
+    return days_of_the_week[next_day_ind]

@@ -212,3 +212,20 @@ class DataLoadingTests(TestCase):
             u.days_and_hours_mention_to_weekly_table_format("Sun 3 pm - 11:30 pm"),
             [dict(day="Sun", open_time=time(15), close_time=time(23, 30))],
         )
+
+        self.assertEqual(
+            u.days_and_hours_mention_to_weekly_table_format("Sun 3 pm - 12:30 am"),
+            [
+                dict(day="Sun", open_time=time(15), close_time=time.max),
+                dict(day="Mon", open_time=time.min, close_time=time(0, 30)),
+            ],
+        )
+
+    def test_get_next_day(self):
+        self.assertEqual(u.get_next_day("Mon"), "Tues")
+        self.assertEqual(u.get_next_day("Tues"), "Wed")
+        self.assertEqual(u.get_next_day("Wed"), "Thu")
+        self.assertEqual(u.get_next_day("Thu"), "Fri")
+        self.assertEqual(u.get_next_day("Fri"), "Sat")
+        self.assertEqual(u.get_next_day("Sat"), "Sun")
+        self.assertEqual(u.get_next_day("Sun"), "Mon")
