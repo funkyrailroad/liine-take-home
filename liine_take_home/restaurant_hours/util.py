@@ -61,9 +61,17 @@ def get_opening_hours_from_days_and_hours_field(field):
 
 def get_opening_hours_from_days_and_hours_mention(days_and_hours_mention):
     days_mention, hours_mention = split_days_and_hours_mention(days_and_hours_mention)
-    days = get_opening_days_from_day_or_range(days_mention)
+    days = get_days_from_days_mention(days_mention)
     start, end = get_opening_hours_from_hours_mention(hours_mention)
     return [(day, start, end) for day in days]
+
+
+def get_days_from_days_mention(days_mention):
+    days = []
+    days_or_day_ranges = split_days_mention(days_mention)
+    for day_or_day_range in days_or_day_ranges:
+        days.extend(get_opening_days_from_day_or_range(day_or_day_range))
+    return days
 
 
 def split_days_and_hours_mention(mention):
