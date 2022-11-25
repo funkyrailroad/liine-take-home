@@ -16,3 +16,5 @@ docker run --rm -it --network=host -v $(pwd):/outside --entrypoint bash liine-ta
 cd outside/liine_take_home/
 python manage.py runserver 0:8000
 
+# Populate the weekly opening hours table
+python manage.py load_csv_to_weekly_table
