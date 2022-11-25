@@ -214,8 +214,12 @@ class DataLoadingTests(TestCase):
         )
 
         self.assertEqual(
-            u.days_and_hours_mention_to_weekly_table_format("Sun 3 pm - 12:30 am"),
+            u.days_and_hours_mention_to_weekly_table_format("Thu-Fri, Sun 3 pm - 12:30 am"),
             [
+                dict(day="Thu", open_time=time(15), close_time=time.max),
+                dict(day="Fri", open_time=time.min, close_time=time(0, 30)),
+                dict(day="Fri", open_time=time(15), close_time=time.max),
+                dict(day="Sat", open_time=time.min, close_time=time(0, 30)),
                 dict(day="Sun", open_time=time(15), close_time=time.max),
                 dict(day="Mon", open_time=time.min, close_time=time(0, 30)),
             ],
