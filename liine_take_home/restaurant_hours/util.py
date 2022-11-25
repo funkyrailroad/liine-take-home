@@ -220,3 +220,17 @@ def get_next_day(day):
     day_ind = days_of_the_week.index(day)
     next_day_ind = (day_ind + 1) % len(days_of_the_week)
     return days_of_the_week[next_day_ind]
+
+
+def csv_row_to_weekly_table_format(row):
+    name, days_and_hours_field = row
+    days_and_hours_mentions = split_days_and_hours_field(days_and_hours_field)
+    weekly_table_format_dicts = []
+    for days_and_hours_mention in days_and_hours_mentions:
+        weekly_table_format_dicts.extend(
+            days_and_hours_mention_to_weekly_table_format(days_and_hours_mention)
+        )
+    for weekly_table_format_dict in weekly_table_format_dicts:
+        weekly_table_format_dict.update(dict(name=name))
+
+    return weekly_table_format_dicts

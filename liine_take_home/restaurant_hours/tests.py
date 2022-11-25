@@ -235,3 +235,56 @@ class DataLoadingTests(TestCase):
         self.assertEqual(u.get_next_day("Fri"), "Sat")
         self.assertEqual(u.get_next_day("Sat"), "Sun")
         self.assertEqual(u.get_next_day("Sun"), "Mon")
+
+    def test_csv_row_to_weekly_table_format(self):
+        csv_row = [
+            "Beasley's Chicken + Honey",
+            "Mon-Fri, Sat 11 am - 12 pm  / Sun 11 am - 10 pm",
+        ]
+        self.assertEqual(
+            u.csv_row_to_weekly_table_format(csv_row),
+            [
+                dict(
+                    name="Beasley's Chicken + Honey",
+                    day="Mon",
+                    open_time=time(11),
+                    close_time=time(12),
+                ),
+                dict(
+                    name="Beasley's Chicken + Honey",
+                    day="Tues",
+                    open_time=time(11),
+                    close_time=time(12),
+                ),
+                dict(
+                    name="Beasley's Chicken + Honey",
+                    day="Wed",
+                    open_time=time(11),
+                    close_time=time(12),
+                ),
+                dict(
+                    name="Beasley's Chicken + Honey",
+                    day="Thu",
+                    open_time=time(11),
+                    close_time=time(12),
+                ),
+                dict(
+                    name="Beasley's Chicken + Honey",
+                    day="Fri",
+                    open_time=time(11),
+                    close_time=time(12),
+                ),
+                dict(
+                    name="Beasley's Chicken + Honey",
+                    day="Sat",
+                    open_time=time(11),
+                    close_time=time(12),
+                ),
+                dict(
+                    name="Beasley's Chicken + Honey",
+                    day="Sun",
+                    open_time=time(11),
+                    close_time=time(22),
+                ),
+            ],
+        )
