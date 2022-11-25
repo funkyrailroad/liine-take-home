@@ -170,3 +170,20 @@ def convert_time_string_to_time_obj(time_string):
     elif suffix == "pm":
         hour += 12
     return time(hour=hour, minute=min)
+
+
+def days_and_hours_mention_to_weekly_table_format(days_and_hours_mention):
+    opening_hours = get_opening_hours_from_days_and_hours_mention(
+        days_and_hours_mention
+    )
+
+    weekly_table_format_dicts = []
+    for opening_hour in opening_hours:
+        weekly_table_format_dicts.append(
+            dict(
+                day=opening_hour[0],
+                open_time=opening_hour[1],
+                close_time=opening_hour[2],
+            )
+        )
+    return weekly_table_format_dicts

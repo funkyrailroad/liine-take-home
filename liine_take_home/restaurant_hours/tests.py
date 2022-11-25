@@ -204,3 +204,11 @@ class DataCleaningTests(TestCase):
             u.get_opening_hours_from_days_and_hours_mention("Sun 3 pm - 11:30 pm"),
             [("Sun", time(15), time(23, 30))],
         )
+
+
+class DataLoadingTests(TestCase):
+    def test_days_and_hours_mention_to_weekly_table_format(self):
+        self.assertEqual(
+            u.days_and_hours_mention_to_weekly_table_format("Sun 3 pm - 11:30 pm"),
+            [dict(day="Sun", open_time=time(15), close_time=time(23, 30))],
+        )
