@@ -207,6 +207,11 @@ class DataCleaningTests(TestCase):
 
 
 class DataLoadingTests(TestCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.maxDiff = None
+
     def test_days_and_hours_mention_to_weekly_table_format(self):
         self.assertEqual(
             u.days_and_hours_mention_to_weekly_table_format("Sun 3 pm - 11:30 pm"),
