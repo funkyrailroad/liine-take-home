@@ -1,5 +1,5 @@
 # Create your tests here.
-from datetime import time
+from datetime import datetime, time
 from pprint import pprint
 
 from django.test import TestCase
@@ -285,6 +285,94 @@ class DataLoadingTests(TestCase):
                     day="Sun",
                     open_time=time(11),
                     close_time=time(22),
+                ),
+            ],
+        )
+
+        csv_row = [
+            "Bonchon",
+            "Mon-Wed 5 pm - 12:30 am / Thu-Fri 5 pm - 1:30 am / Sat 3 pm - 1:30 am / Sun 3 pm - 11:30 pm",
+        ]
+        self.assertEqual(
+            u.csv_row_to_weekly_table_format(csv_row),
+            [
+                dict(
+                    name="Bonchon",
+                    day="Mon",
+                    open_time=time(17),
+                    close_time=time.max,
+                ),
+                dict(
+                    name="Bonchon",
+                    day="Tues",
+                    open_time=time.min,
+                    close_time=time(0, 30),
+                ),
+                dict(
+                    name="Bonchon",
+                    day="Tues",
+                    open_time=time(17),
+                    close_time=time.max,
+                ),
+                dict(
+                    name="Bonchon",
+                    day="Wed",
+                    open_time=time.min,
+                    close_time=time(0, 30),
+                ),
+                dict(
+                    name="Bonchon",
+                    day="Wed",
+                    open_time=time(17),
+                    close_time=time.max,
+                ),
+                dict(
+                    name="Bonchon",
+                    day="Thu",
+                    open_time=time.min,
+                    close_time=time(0, 30),
+                ),
+                dict(
+                    name="Bonchon",
+                    day="Thu",
+                    open_time=time(17),
+                    close_time=time.max,
+                ),
+                dict(
+                    name="Bonchon",
+                    day="Fri",
+                    open_time=time.min,
+                    close_time=time(1, 30),
+                ),
+                dict(
+                    name="Bonchon",
+                    day="Fri",
+                    open_time=time(17),
+                    close_time=time.max,
+                ),
+                dict(
+                    name="Bonchon",
+                    day="Sat",
+                    open_time=time.min,
+                    close_time=time(1, 30),
+                ),
+                dict(
+                    name="Bonchon",
+                    day="Sat",
+                    open_time=time(15),
+                    close_time=time.max,
+                ),
+                dict(
+                    name="Bonchon",
+                    day="Sun",
+                    open_time=time.min,
+                    close_time=time(1, 30),
+                ),
+                dict(
+                    name="Bonchon",
+                    day="Sun",
+                    open_time=time(15),
+                    close_time=time(23, 30),
                 ),
             ],
         )
