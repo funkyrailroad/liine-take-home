@@ -15,5 +15,3 @@ services:
       POSTGRES_PASSWORD: takehome
       POSTGRES_USER: postgres
     restart: always
-    # volumes:
-    #   - ./db-data/:/var/lib/postgresql/data
