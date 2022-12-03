@@ -4,4 +4,13 @@ RUN pip install django~=4.0 djangorestframework
 RUN pip install pdbpp
 RUN pip install psycopg2
 
-ENTRYPOINT ["bash"]
+COPY . /app
+WORKDIR /app/liine_take_home
+
+ENV DB_HOST=localhost
+ENV DB_NAME=liine
+ENV DB_PASSWORD=takehome
+ENV DB_PORT=5432
+ENV DB_USER=postgres
+
+ENTRYPOINT ["bash", "entrypoint.sh"]
